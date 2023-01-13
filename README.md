@@ -1,4 +1,4 @@
-# frontend
+# frontend for Dashboard Project
 
 ## Project setup
 ```
