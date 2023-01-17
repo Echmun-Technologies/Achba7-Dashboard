@@ -63,6 +63,47 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <v-divider></v-divider>
+        <v-list v-show="hasAdminAccess" subheader>
+          <v-subheader>Observations</v-subheader>
+          <v-list-item to="/main/observation/ManageObservation.vue">
+            <v-list-item-action>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Manage Observations</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="main/observation/CreateObservation.vue">
+            <v-list-item-action>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Create Observation</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <v-list v-show="hasAdminAccess" subheader>
+          <v-subheader>Animals</v-subheader>
+          <v-list-item to="#">
+            <v-list-item-action>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Manage Animals</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="#">
+            <v-list-item-action>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Create Animal</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
         <v-spacer></v-spacer>
         <v-list>
           <v-list-item @click="logout">
