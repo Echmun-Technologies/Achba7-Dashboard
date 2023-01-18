@@ -63,6 +63,47 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <v-divider></v-divider>
+        <v-list v-show="hasAdminAccess" subheader>
+          <v-subheader>Observations</v-subheader>
+          <v-list-item to="/main/observation/observations/all">
+            <v-list-item-action>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Manage Observations</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/main/observation/observations/create">
+            <v-list-item-action>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Create Observation</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <v-list v-show="hasAdminAccess" subheader>
+          <v-subheader>Animals</v-subheader>
+          <v-list-item to="/main/animal/animals/all">
+            <v-list-item-action>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Manage Animals</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/main/animal/animals/create">
+            <v-list-item-action>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Create Animal</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
         <v-spacer></v-spacer>
         <v-list>
           <v-list-item @click="logout">
@@ -129,7 +170,6 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-
 import { appName } from "@/env";
 import {
   readDashboardMiniDrawer,
@@ -141,7 +181,6 @@ import {
   commitSetDashboardMiniDrawer,
 } from "@/store/main/mutations";
 import { dispatchUserLogOut } from "@/store/main/actions";
-
 const routeGuardMain = async (to, from, next) => {
   if (to.path === "/main") {
     next("/main/dashboard");
@@ -149,43 +188,33 @@ const routeGuardMain = async (to, from, next) => {
     next();
   }
 };
-
 @Component
 export default class Main extends Vue {
   public appName = appName;
-
   public beforeRouteEnter(to, from, next) {
     routeGuardMain(to, from, next);
   }
-
   public beforeRouteUpdate(to, from, next) {
     routeGuardMain(to, from, next);
   }
-
   get miniDrawer() {
     return readDashboardMiniDrawer(this.$store);
   }
-
   get showDrawer() {
     return readDashboardShowDrawer(this.$store);
   }
-
   set showDrawer(value) {
     commitSetDashboardShowDrawer(this.$store, value);
   }
-
   public switchShowDrawer() {
     commitSetDashboardShowDrawer(this.$store, !readDashboardShowDrawer(this.$store));
   }
-
   public switchMiniDrawer() {
     commitSetDashboardMiniDrawer(this.$store, !readDashboardMiniDrawer(this.$store));
   }
-
   public get hasAdminAccess() {
     return readHasAdminAccess(this.$store);
   }
-
   public async logout() {
     await dispatchUserLogOut(this.$store);
   }
