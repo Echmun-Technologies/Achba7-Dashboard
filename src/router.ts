@@ -111,6 +111,80 @@ export default new Router({
                 },
               ],
             },
+            {
+              path: "observation",
+              component: () =>
+                import(
+                  /* webpackChunkName: "main-observation" */ "./views/main/observation/Observation.vue"
+                ),
+              redirect: "observation/observations/all",
+              children: [
+                {
+                  path: "observations",
+                  redirect: "observations/all",
+                },
+                {
+                  path: "observations/all",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-observation-observations" */ "./views/main/observation/ManageObservation.vue"
+                    ),
+                },
+                {
+                  path: "observations/edit/:id",
+                  name: "main-observation-observations-edit",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-observation-observations-edit" */ "./views/main/observation/EditObservation.vue"
+                    ),
+                },
+                {
+                  path: "observations/create",
+                  name: "main-observation-observations-create",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-observation-observations-create" */ "./views/main/observation/CreateObservation.vue"
+                    ),
+                },
+              ],
+            },
+            {
+              path: "animal",
+              component: () =>
+                import(
+                  /* webpackChunkName: "main-animal" */ "./views/main/animal/Animal.vue"
+                ),
+              redirect: "animal/animals/all",
+              children: [
+                {
+                  path: "animals",
+                  redirect: "animals/all",
+                },
+                {
+                  path: "animals/all",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-animal-animals" */ "./views/main/animal/ManageAnimal.vue"
+                    ),
+                },
+                {
+                  path: "animals/edit/:id",
+                  name: "main-animal-animals-edit",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-animal-animals-edit" */ "./views/main/animal/EditAnimal.vue"
+                    ),
+                },
+                {
+                  path: "animals/create",
+                  name: "main-animal-animals-create",
+                  component: () =>
+                    import(
+                      /* webpackChunkName: "main-animal-animals-create" */ "./views/main/animal/CreateAnimal.vue"
+                    ),
+                },
+              ],
+            },
           ],
         },
       ],
