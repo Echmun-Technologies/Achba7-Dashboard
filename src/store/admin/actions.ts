@@ -1,6 +1,11 @@
 import { api } from "@/api";
 import { ActionContext } from "vuex";
-import { IObservationProfileCreate, IObservationProfileUpdate, IUserProfileCreate, IUserProfileUpdate } from "@/interfaces";
+import {
+  IObservationProfileCreate,
+  IObservationProfileUpdate,
+  IUserProfileCreate,
+  IUserProfileUpdate,
+} from "@/interfaces";
 import { State } from "../state";
 import { AdminState } from "./state";
 import { getStoreAccessors } from "typesafe-vuex";
@@ -83,7 +88,11 @@ export const actions = {
       commitAddNotification(context, loadingNotification);
       const response = (
         await Promise.all([
-          api.updateObservation(context.rootState.main.token, payload.description, payload.observation),
+          api.updateObservation(
+            context.rootState.main.token,
+            payload.description,
+            payload.observation,
+          ),
           await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
         ])
       )[0];
@@ -97,7 +106,10 @@ export const actions = {
       await dispatchCheckApiError(context, error);
     }
   },
-  async actionCreateObservation(context: MainContext, payload: IObservationProfileCreate) {
+  async actionCreateObservation(
+    context: MainContext,
+    payload: IObservationProfileCreate,
+  ) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
       commitAddNotification(context, loadingNotification);
@@ -127,7 +139,7 @@ export const dispatchUpdateUser = dispatch(actions.actionUpdateUser);
 export const dispatchCreateObservation = dispatch(actions.actionCreateObservation);
 export const dispatchGetObservations = dispatch(actions.actionGetObservations);
 export const dispatchUpdateObservation = dispatch(actions.actionUpdateObservation);
-function commitSetObservations(context: MainContext, data: any) {
+
+function commitSetObservations(_context: MainContext, _data: any) {
   throw new Error("Function not implemented.");
 }
-

@@ -16,7 +16,10 @@ export const mutations = {
     state.observations = payload;
   },
   setObservation(state: AdminState, payload: IObservationProfile) {
-    const observations = state.observations.filter((observation: IObservationProfile) => observation.description !== payload.description);
+    const observations = state.observations.filter(
+      (observation: IObservationProfile) =>
+        observation.description !== payload.description,
+    );
     observations.push(payload);
     state.observations = observations;
   },

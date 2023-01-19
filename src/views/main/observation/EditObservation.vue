@@ -1,136 +1,140 @@
 <template>
-    <v-container fluid>
-      <validation-observer ref="observer" v-slot="{ invalid }">
-        <form @submit.prevent="onSubmit" @reset.prevent="onReset">
-          <v-card class="ma-3 pa-3">
-            <v-card-title primary-title>
-              <div class="headline primary--text">Edit Observation </div>
-            </v-card-title>
-            <v-card-text>
-              <div class="my-3">
-                <div class="subheading secondary--text text--lighten-2">Description</div>
-                <div v-if="observation" class="title primary--text text--darken-2">
-                  {{ observation.description }}
-                </div>
-                <div v-else class="title primary--text text--darken-2">-----</div>
+  <v-container fluid>
+    <validation-observer ref="observer" v-slot="{ invalid }">
+      <form @submit.prevent="onSubmit" @reset.prevent="onReset">
+        <v-card class="ma-3 pa-3">
+          <v-card-title primary-title>
+            <div class="headline primary--text">Edit Observation</div>
+          </v-card-title>
+          <v-card-text>
+            <div class="my-3">
+              <div class="subheading secondary--text text--lighten-2">Description</div>
+              <div v-if="observation" class="title primary--text text--darken-2">
+                {{ observation.description }}
               </div>
-              <validation-provider v-slot="{ errors }" name="Description" rules="required">
-                <v-text-field
-                  v-model="description"
-                  label="Description"
-                  required
-                  :error-messages="errors"
-                ></v-text-field>
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                rules="required"
-                name="Observation Type"
-              >
-                <v-text-field
-                  v-model="observation_type"
-                  label="Observation Type"
-                  :error-messages="errors"
-                  required
-                ></v-text-field>
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                rules="required"
-                name="Date"
-              >
-                <v-text-field
-                  v-model="date"
-                  label="Date"
-                  :error-messages="errors"
-                  required
-                ></v-text-field>
-              </validation-provider>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn @click="cancel">Cancel</v-btn>
-              <v-btn type="reset">Reset</v-btn>
-              <v-btn :disabled="invalid" type="submit"> Save </v-btn>
-            </v-card-actions>
-          </v-card>
-        </form>
-      </validation-observer>
-    </v-container>
-  </template>
-  
-  <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import { IObservationProfileUpdate } from "@/interfaces";
-  import { dispatchGetObservations, dispatchUpdateObservation } from "@/store/admin/actions";
-  import { readAdminOneObservation } from "@/store/admin/getters";
-  import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-  import { required } from "vee-validate/dist/rules";
-  
-  extend("required", { ...required, message: "{_field_} can not be empty" });
-  
-  @Component({
-    components: {
-      ValidationObserver,
-      ValidationProvider,
-    },
-  })
-  export default class EditObservation extends Vue {
-[x: string]: any;
-    $refs!: {
-      observer: InstanceType<typeof ValidationObserver>;
-    };
-  
-    public valid = false;
-    public description = "";
-    public observation_type = "";
-    public date = "";
-  
-    public async mounted() {
-      await dispatchGetObservations(this.$store);
-      this.onReset();
-    }
-  
-    public onReset() {
-      if (this.observation) {
-        this.description = this.observation.description;
-        this.observation_type = this.observation.observation_type;
-        this.date = this.observation.date;
-      }
-    }
-  
-    public cancel() {
-      this.$router.back();
-    }
-  
-    public async onSubmit() {
-      const success = await this.$refs.observer.validate();
-      if (!success) {
-        return;
-      }
-  
-      const updatedProfile: IObservationProfileUpdate = {};
-      if (this.description) {
-        updatedProfile.description = this.description;
-      }
-      if (this.observation_type) {
-        updatedProfile.observation_type = this.observation_type;
-      }
-      if (this.date) {
-        updatedProfile.date = this.date;
-      }
-      if (this.observation) {
-        await dispatchUpdateObservation(this.$store, {
-          description: this.observation.date,
-          observation: updatedProfile,
-        });
-      }
-      this.$router.push("/main/observation/observations");
-    }
-  
-    get user() {
-      return readAdminOneObservation(this.$store)(this.$router.currentRoute.params.description);
+              <div v-else class="title primary--text text--darken-2">-----</div>
+            </div>
+            <validation-provider
+              v-slot="{ errors }"
+              name="Description"
+              rules="required"
+            >
+              <v-text-field
+                v-model="description"
+                label="Description"
+                required
+                :error-messages="errors"
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              rules="required"
+              name="Observation Type"
+            >
+              <v-text-field
+                v-model="observation_type"
+                label="Observation Type"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider v-slot="{ errors }" rules="required" name="Date">
+              <v-text-field
+                v-model="date"
+                label="Date"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="cancel">Cancel</v-btn>
+            <v-btn type="reset">Reset</v-btn>
+            <v-btn :disabled="invalid" type="submit"> Save </v-btn>
+          </v-card-actions>
+        </v-card>
+      </form>
+    </validation-observer>
+  </v-container>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { IObservationProfileUpdate } from "@/interfaces";
+import {
+  dispatchGetObservations,
+  dispatchUpdateObservation,
+} from "@/store/admin/actions";
+import { readAdminOneObservation } from "@/store/admin/getters";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required } from "vee-validate/dist/rules";
+
+extend("required", { ...required, message: "{_field_} can not be empty" });
+
+@Component({
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
+})
+export default class EditObservation extends Vue {
+  $refs!: {
+    observer: InstanceType<typeof ValidationObserver>;
+  };
+
+  public valid = false;
+  public description = "";
+  public observation_type = "";
+  public date = "";
+  observation: any;
+
+  public async mounted() {
+    await dispatchGetObservations(this.$store);
+    this.onReset();
+  }
+
+  public onReset() {
+    if (this.observation) {
+      this.description = this.observation.description;
+      this.observation_type = this.observation.observation_type;
+      this.date = this.observation.date;
     }
   }
-  </script>
-  
+
+  public cancel() {
+    this.$router.back();
+  }
+
+  public async onSubmit() {
+    const success = await this.$refs.observer.validate();
+    if (!success) {
+      return;
+    }
+
+    const updatedProfile: IObservationProfileUpdate = {};
+    if (this.description) {
+      updatedProfile.description = this.description;
+    }
+    if (this.observation_type) {
+      updatedProfile.observation_type = this.observation_type;
+    }
+    if (this.date) {
+      updatedProfile.date = this.date;
+    }
+    if (this.observation) {
+      await dispatchUpdateObservation(this.$store, {
+        description: this.observation.date,
+        observation: updatedProfile,
+      });
+    }
+    this.$router.push("/main/observation/observations");
+  }
+
+  get user() {
+    return readAdminOneObservation(this.$store)(
+      this.$router.currentRoute.params.description,
+    );
+  }
+}
+</script>

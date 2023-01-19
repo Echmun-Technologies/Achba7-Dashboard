@@ -7,7 +7,11 @@
             <div class="headline primary--text">Create Observation</div>
           </v-card-title>
           <v-card-text>
-            <validation-provider v-slot="{ errors }" name="Description" rules="required">
+            <validation-provider
+              v-slot="{ errors }"
+              name="Description"
+              rules="required"
+            >
               <v-text-field
                 v-model="description"
                 label="Description"
@@ -27,11 +31,7 @@
                 required
               ></v-text-field>
             </validation-provider>
-            <validation-provider
-              v-slot="{ errors }"
-              rules="required"
-              name="Date"
-            >
+            <validation-provider v-slot="{ errors }" rules="required" name="Date">
               <v-text-field
                 v-model="date"
                 label="Date"
@@ -55,7 +55,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { IObservationProfileCreate } from "@/interfaces";
-import { dispatchCreateObservation, dispatchGetObservations } from "@/store/admin/actions";
+import {
+  dispatchCreateObservation,
+  dispatchGetObservations,
+} from "@/store/admin/actions";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
@@ -69,7 +72,6 @@ extend("required", { ...required, message: "{_field_} can not be empty" });
   },
 })
 export default class CreateObservation extends Vue {
-[x: string]: any;
   $refs!: {
     observer: InstanceType<typeof ValidationObserver>;
   };

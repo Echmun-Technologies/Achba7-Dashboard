@@ -38,4 +38,3 @@ export interface IObservationProfileCreate {
   observation_type?: string;
   date?: string;
 }
-
