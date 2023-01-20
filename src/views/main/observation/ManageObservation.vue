@@ -3,9 +3,25 @@
     <v-toolbar light>
       <v-toolbar-title> Manage Observations </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/main/admin/users/create">Create Observation</v-btn>
+      <v-btn color="primary" to="/main/observation/observations/create"
+        >Create Observation</v-btn
+      >
     </v-toolbar>
-    <v-data-table :headers="headers" :items="observations"> </v-data-table>
+    <v-data-table :headers="headers" :items="observations">
+      <!-- eslint-disable-next-line vue/valid-v-slot -->
+      <template #item.actions="{ item }">
+        <v-btn
+          slot="activator"
+          icon
+          :to="{
+            name: 'main-observation-observations-edit',
+            params: { description: item.description },
+          }"
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -20,19 +36,19 @@ export default class ManageObservation extends Vue {
     {
       text: "Description",
       sortable: true,
-      value: "description",
+      value: "{{ observation.description }}",
       align: "left",
     },
     {
       text: "Observation Type",
       sortable: true,
-      value: "observation_type",
+      value: "{{ observation.observation_type }}",
       align: "left",
     },
     {
       text: "Date",
       sortable: true,
-      value: "date",
+      value: "{{ observation.date }}",
       align: "left",
     },
     {
@@ -41,6 +57,7 @@ export default class ManageObservation extends Vue {
       sortable: false,
     },
   ];
+
   get observations() {
     return readAdminObservations(this.$store);
   }

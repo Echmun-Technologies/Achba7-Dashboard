@@ -45,10 +45,16 @@ export const api = {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
   async getObservations(token: string) {
-    return axios.get<IObservationProfile[]>(
-      `${apiUrl}/api/v1/observations/`,
-      authHeaders(token),
-    );
+    axios
+      .get("/Observation.json")
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+    return axios.get("/Observation.json");
+
+    //return axios.get<IObservationProfile[]>(
+    //`${apiUrl}/api/v1/observations/`,
+    //authHeaders(token),
+    //);
   },
   async updateObservation(
     token: string,
