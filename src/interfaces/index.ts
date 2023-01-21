@@ -21,3 +21,20 @@ export interface IUserProfileCreate {
   is_active?: boolean;
   is_superuser?: boolean;
 }
+export interface IAnimalProfile {
+  name: string;
+  type: string;
+  photo: string;
+}
+
+export interface IAnimalProfileUpdate {
+  name?: string;
+  type?: string;
+  photo?: string;
+}
+
+export interface IAnimalProfileCreate {
+  name: string;
+  type?: string;
+  photo?: string;
+}
