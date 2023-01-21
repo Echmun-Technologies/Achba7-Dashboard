@@ -37,21 +37,21 @@ import { dispatchGetUsers } from "@/store/admin/actions";
 export default class AdminUsers extends Vue {
   public headers = [
     {
-      text: "Name",
+      text: "First Name",
       sortable: true,
-      value: "full_name",
+      value: "first_name",
+      align: "left",
+    },
+    {
+      text: "Last Name",
+      sortable: true,
+      value: "last_name",
       align: "left",
     },
     {
       text: "Email",
       sortable: true,
       value: "email",
-      align: "left",
-    },
-    {
-      text: "Full Name",
-      sortable: true,
-      value: "full_name",
       align: "left",
     },
     {

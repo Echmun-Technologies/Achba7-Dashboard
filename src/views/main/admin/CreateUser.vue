@@ -7,10 +7,18 @@
             <div class="headline primary--text">Create User</div>
           </v-card-title>
           <v-card-text>
-            <validation-provider v-slot="{ errors }" name="Full Name" rules="required">
+            <validation-provider v-slot="{ errors }" name="First Name" rules="required">
               <v-text-field
-                v-model="fullName"
-                label="Full Name"
+                v-model="firstName"
+                label="First Name"
+                required
+                :error-messages="errors"
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider v-slot="{ errors }" name="Last Name" rules="required">
+              <v-text-field
+                v-model="lastName"
+                label="Last Name"
                 required
                 :error-messages="errors"
               ></v-text-field>
@@ -108,7 +116,8 @@ export default class CreateUser extends Vue {
   };
 
   public valid = false;
-  public fullName = "";
+  public firstName = "";
+  public lastName = "";
   public email = "";
   public isActive = true;
   public isSuperuser = false;
@@ -124,7 +133,8 @@ export default class CreateUser extends Vue {
   public onReset() {
     this.password1 = "";
     this.password2 = "";
-    this.fullName = "";
+    this.firstName = "";
+    this.lastName = "";
     this.email = "";
     this.isActive = true;
     this.isSuperuser = false;
@@ -144,8 +154,11 @@ export default class CreateUser extends Vue {
     const updatedProfile: IUserProfileCreate = {
       email: this.email,
     };
-    if (this.fullName) {
-      updatedProfile.full_name = this.fullName;
+    if (this.firstName) {
+      updatedProfile.first_name = this.firstName;
+    }
+    if (this.lastName) {
+      updatedProfile.last_name = this.lastName;
     }
     if (this.email) {
       updatedProfile.email = this.email;
