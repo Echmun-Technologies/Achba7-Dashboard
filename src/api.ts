@@ -1,12 +1,13 @@
+/* eslint-disable */
 import axios from "axios";
 import { apiUrl } from "@/env";
 import {
   IUserProfile,
   IUserProfileUpdate,
   IUserProfileCreate,
-  IObservationProfile,
-  IObservationProfileUpdate,
-  IObservationProfileCreate,
+  IObservation,
+  IObservationUpdate,
+  IObservationCreate,
 } from "./interfaces";
 
 function authHeaders(token: string) {
@@ -45,11 +46,7 @@ export const api = {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
   async getObservations(token: string) {
-    axios
-      .get("/Observation.json")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-    return axios.get("/Observation.json");
+    return axios.get<IObservation[]>("/Observation.json");
 
     //return axios.get<IObservationProfile[]>(
     //`${apiUrl}/api/v1/observations/`,
@@ -59,7 +56,7 @@ export const api = {
   async updateObservation(
     token: string,
     description: string,
-    data: IObservationProfileUpdate,
+    data: IObservationUpdate,
   ) {
     return axios.put(
       `${apiUrl}/api/v1/observations/${description}`,
@@ -67,7 +64,7 @@ export const api = {
       authHeaders(token),
     );
   },
-  async createObservation(token: string, data: IObservationProfileCreate) {
+  async createObservation(token: string, data: IObservationCreate) {
     return axios.post(`${apiUrl}/api/v1/observations/`, data, authHeaders(token));
   },
   async passwordRecovery(email: string) {

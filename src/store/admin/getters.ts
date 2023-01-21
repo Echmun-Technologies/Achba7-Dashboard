@@ -11,9 +11,9 @@ export const getters = {
     }
   },
   adminObservations: (state: AdminState) => state.observations,
-  adminOneObservation: (state: AdminState) => (description: string) => {
+  adminOneObservation: (state: AdminState) => (observationId: number) => {
     const filteredObservations = state.observations.filter(
-      (observation) => observation.description === description,
+      (observation) => observation.id === observationId,
     );
     if (filteredObservations.length > 0) {
       return { ...filteredObservations[0] };

@@ -1,4 +1,4 @@
-import { IObservationProfile, IUserProfile } from "@/interfaces";
+import { IObservation, IUserProfile } from "@/interfaces";
 import { AdminState } from "./state";
 import { getStoreAccessors } from "typesafe-vuex";
 import { State } from "../state";
@@ -12,13 +12,12 @@ export const mutations = {
     users.push(payload);
     state.users = users;
   },
-  setObservations(state: AdminState, payload: IObservationProfile[]) {
+  setObservations(state: AdminState, payload: IObservation[]) {
     state.observations = payload;
   },
-  setObservation(state: AdminState, payload: IObservationProfile) {
+  setObservation(state: AdminState, payload: IObservation) {
     const observations = state.observations.filter(
-      (observation: IObservationProfile) =>
-        observation.description !== payload.description,
+      (observation: IObservation) => observation.id !== payload.id,
     );
     observations.push(payload);
     state.observations = observations;

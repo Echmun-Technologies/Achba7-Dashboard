@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { IObservationProfileUpdate } from "@/interfaces";
+import { IObservationUpdate } from "@/interfaces";
 import {
   dispatchGetObservations,
   dispatchUpdateObservation,
@@ -112,7 +112,7 @@ export default class EditObservation extends Vue {
       return;
     }
 
-    const updatedProfile: IObservationProfileUpdate = {};
+    const updatedProfile: IObservationUpdate = {};
     if (this.description) {
       updatedProfile.description = this.description;
     }
@@ -132,9 +132,7 @@ export default class EditObservation extends Vue {
   }
 
   get user() {
-    return readAdminOneObservation(this.$store)(
-      this.$router.currentRoute.params.description,
-    );
+    return readAdminOneObservation(this.$store)(this.$router.currentRoute.params.id);
   }
 }
 </script>

@@ -1,6 +1,6 @@
-import { IObservationProfile, IUserProfile } from "@/interfaces";
+import { IObservation, IUserProfile } from "@/interfaces";
 
 export interface AdminState {
   users: IUserProfile[];
-  observations: IObservationProfile[];
+  observations: IObservation[];
 }

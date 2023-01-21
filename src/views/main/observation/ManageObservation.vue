@@ -15,7 +15,7 @@
           icon
           :to="{
             name: 'main-observation-observations-edit',
-            params: { description: item.description },
+            params: { id: item.id },
           }"
         >
           <v-icon>mdi-pencil</v-icon>
@@ -36,19 +36,19 @@ export default class ManageObservation extends Vue {
     {
       text: "Description",
       sortable: true,
-      value: "{{ observation.description }}",
+      value: "description",
       align: "left",
     },
     {
       text: "Observation Type",
       sortable: true,
-      value: "{{ observation.observation_type }}",
+      value: "observation_type",
       align: "left",
     },
     {
       text: "Date",
       sortable: true,
-      value: "{{ observation.date }}",
+      value: "date",
       align: "left",
     },
     {
@@ -59,6 +59,7 @@ export default class ManageObservation extends Vue {
   ];
 
   get observations() {
+    console.log(readAdminObservations(this.$store));
     return readAdminObservations(this.$store);
   }
 
