@@ -53,9 +53,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { IAnimalProfileUpdate } from "@/interfaces";
-import { dispatchGetUsers, dispatchUpdateUser } from "@/store/admin/actions";
-import { readAdminOneUser } from "@/store/admin/getters";
+import { IAnimalUpdate } from "@/interfaces";
+import { dispatchGetAnimals, dispatchUpdateAniaml } from "@/store/admin/actions";
+import { readAdminOneAnimal } from "@/store/admin/getters";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
@@ -79,7 +79,7 @@ export default class EditAnimal extends Vue {
   animal: any;
 
   public async mounted() {
-    await dispatchGetUsers(this.$store);
+    await dispatchGetAnimals(this.$store);
     this.onReset();
   }
 
@@ -102,7 +102,7 @@ export default class EditAnimal extends Vue {
       return;
     }
 
-    const updatedProfile: IAnimalProfileUpdate = {};
+    const updatedProfile: IAnimalUpdate = {};
     if (this.name) {
       updatedProfile.name = this.name;
     }
@@ -112,16 +112,16 @@ export default class EditAnimal extends Vue {
     if (this.photo) {
       updatedProfile.photo = this.photo;
     }
-    //if (this.animal) {
-    //await dispatchUpdateAnimal(this.$store, {
-    //id: this.user.id,
-    //animal: updatedProfile,
-    //});
+    if (this.animal) {
+      await dispatchUpdateAniaml(this.$store, {
+        id: this.animal.id,
+        animal: updatedProfile,
+      });
+    }
+    this.$router.push("/main/animal/animals");
   }
-  //this.$router.push("/main/animal/animals");
-
-  //get animal() {
-  //return readAdminOneUser(this.$store)(+this.$router.currentRoute.params.id);
-  //}
+  get animals() {
+    return readAdminOneAnimal(this.$store)(+this.$router.currentRoute.params.id);
+  }
 }
 </script>

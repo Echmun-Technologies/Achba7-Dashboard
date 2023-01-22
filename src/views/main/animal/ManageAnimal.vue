@@ -11,7 +11,7 @@
         <v-btn
           slot="activator"
           icon
-          :to="{ name: 'main-animal-animals-edit', params: { name: item.name } }"
+          :to="{ name: 'main-animal-animals-edit', params: { id: item.id } }"
         >
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
@@ -22,8 +22,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { readAdminUsers } from "@/store/admin/getters";
-import { dispatchGetUsers } from "@/store/admin/actions";
+import { readAdminAnimals } from "@/store/admin/getters";
+import { dispatchGetAnimals } from "@/store/admin/actions";
 
 @Component
 export default class AdminUsers extends Vue {
@@ -52,13 +52,13 @@ export default class AdminUsers extends Vue {
       sortable: false,
     },
   ];
-  animals: any;
-  //get animals() {
-  //return readAdminAnimals(this.$store);
-  //}
+  animal: any;
+  get animals() {
+    return readAdminAnimals(this.$store);
+  }
 
-  //public async mounted() {
-  //await dispatchGetAnimals(this.$store);
-  //}
+  public async mounted() {
+    await dispatchGetAnimals(this.$store);
+  }
 }
 </script>

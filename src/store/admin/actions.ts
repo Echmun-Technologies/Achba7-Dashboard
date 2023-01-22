@@ -1,15 +1,20 @@
 import { api } from "@/api";
 import { ActionContext } from "vuex";
 import {
-  IAnimalProfileCreate,
-  IAnimalProfileUpdate,
+  IAnimalCreate,
+  IAnimalUpdate,
   IUserProfileCreate,
   IUserProfileUpdate,
 } from "@/interfaces";
 import { State } from "../state";
 import { AdminState } from "./state";
 import { getStoreAccessors } from "typesafe-vuex";
-import { commitSetUsers, commitSetUser } from "./mutations";
+import {
+  commitSetUsers,
+  commitSetUser,
+  commitSetAnimal,
+  commitSetAnimals,
+} from "./mutations";
 import { dispatchCheckApiError } from "../main/actions";
 import { commitAddNotification, commitRemoveNotification } from "../main/mutations";
 
@@ -69,70 +74,66 @@ export const actions = {
       await dispatchCheckApiError(context, error);
     }
   },
+  async actionGetAnimals(context: MainContext) {
+    try {
+      const response = await api.getAnimals(context.rootState.main.token);
+      if (response) {
+        commitSetAnimals(context, response.data);
+      }
+    } catch (error) {
+      await dispatchCheckApiError(context, error);
+    }
+  },
+  async actionUpdateAnimal(
+    context: MainContext,
+    payload: { id: number; animal: IAnimalUpdate },
+  ) {
+    try {
+      const loadingNotification = { content: "saving", showProgress: true };
+      commitAddNotification(context, loadingNotification);
+      const response = (
+        await Promise.all([
+          api.updateAnimal(context.rootState.main.token, payload.id, payload.animal),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        ])
+      )[0];
+      commitSetAnimal(context, response.data);
+      commitRemoveNotification(context, loadingNotification);
+      commitAddNotification(context, {
+        content: "Animal successfully updated",
+        color: "success",
+      });
+    } catch (error) {
+      await dispatchCheckApiError(context, error);
+    }
+  },
+  async actionCreateAnimal(context: MainContext, payload: IAnimalCreate) {
+    try {
+      const loadingNotification = { content: "saving", showProgress: true };
+      commitAddNotification(context, loadingNotification);
+      const response = (
+        await Promise.all([
+          api.createAnimal(context.rootState.main.token, payload),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        ])
+      )[0];
+      commitSetAnimal(context, response.data);
+      commitRemoveNotification(context, loadingNotification);
+      commitAddNotification(context, {
+        content: "Animal successfully created",
+        color: "success",
+      });
+    } catch (error) {
+      await dispatchCheckApiError(context, error);
+    }
+  },
 };
-//async actionGetAnimals(context: MainContext) {
-//try {
-//const response = await api.getAnimals(context.rootState.main.token);
-//if (response) {
-//commitSetAnimals(context, response.data);
-//}
-//} catch (error) {
-//await dispatchCheckApiError(context, error);
-//}
-//},
-//async actionUpdateAnimal(
-//context: MainContext,
-//payload: { name: string; animal: IAnimalProfileUpdate },
-//) {
-//try {
-//const loadingNotification = { content: "saving", showProgress: true };
-//commitAddNotification(context, loadingNotification);
-//const response = (
-//await Promise.all([
-//api.updateAnimal(context.rootState.main.token, payload.name, payload.animal),
-//await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
-//])
-//)[0];
-//commitSetAnimals(context, response.data);
-//commitRemoveNotification(context, loadingNotification);
-//commitAddNotification(context, {
-//content: "Animal successfully updated",
-//color: "success",
-//});
-//} catch (error) {
-//await dispatchCheckApiError(context, error);
-//}
-//},
-//async actionCreateAnimal(context: MainContext, payload: IAnimalProfileCreate) {
-//try {
-//const loadingNotification = { content: "saving", showProgress: true };
-//commitAddNotification(context, loadingNotification);
-//const response = (
-//await Promise.all([
-//api.createAnimal(context.rootState.main.token, payload),
-//await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
-//])
-// )[0];
-//commitSetAnimals(context, response.data);
-//commitRemoveNotification(context, loadingNotification);
-//commitAddNotification(context, {
-//content: "Animal successfully created",
-//color: "success",
-//});
-//} catch (error) {
-//await dispatchCheckApiError(context, error);
-//}
-//},
-//};
 
 const { dispatch } = getStoreAccessors<AdminState, State>("");
 
 export const dispatchCreateUser = dispatch(actions.actionCreateUser);
 export const dispatchGetUsers = dispatch(actions.actionGetUsers);
 export const dispatchUpdateUser = dispatch(actions.actionUpdateUser);
-//export const dispatchCreateAnimal = dispatch(actions.actionCreateAnimal);
-//export const dispatchGetAnimals = dispatch(actions.actionGetAnimals);
-//export const dispatchUpdateAniaml = dispatch(actions.actionUpdateAnimal);
-//function commitSetAnimals(context: MainContext, data: any) {
-//throw new Error("Function not implemented.");
-//}
+export const dispatchCreateAnimal = dispatch(actions.actionCreateAnimal);
+export const dispatchGetAnimals = dispatch(actions.actionGetAnimals);
+export const dispatchUpdateAniaml = dispatch(actions.actionUpdateAnimal);

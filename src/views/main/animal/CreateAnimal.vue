@@ -46,8 +46,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { IAnimalProfileCreate } from "@/interfaces";
-import { dispatchGetUsers, dispatchCreateUser } from "@/store/admin/actions";
+import { IAnimalCreate } from "@/interfaces";
+import { dispatchGetUsers, dispatchCreateAnimal } from "@/store/admin/actions";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
@@ -92,7 +92,7 @@ export default class CreateAnimal extends Vue {
       return;
     }
 
-    const updatedProfile: IAnimalProfileCreate = {
+    const updatedProfile: IAnimalCreate = {
       name: this.name,
     };
     if (this.name) {
@@ -101,7 +101,7 @@ export default class CreateAnimal extends Vue {
     if (this.type) {
       updatedProfile.type = this.type;
     }
-    //await dispatchCreateUser(this.$store, updatedProfile);
+    await dispatchCreateAnimal(this.$store, updatedProfile);
     this.$router.push("/main/animal/animals");
   }
 }
