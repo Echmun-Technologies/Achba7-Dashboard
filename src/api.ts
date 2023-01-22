@@ -1,6 +1,14 @@
+/* eslint-disable */
 import axios from "axios";
 import { apiUrl } from "@/env";
-import { IUserProfile, IUserProfileUpdate, IUserProfileCreate } from "./interfaces";
+import {
+  IUserProfile,
+  IUserProfileUpdate,
+  IUserProfileCreate,
+  IObservation,
+  IObservationUpdate,
+  IObservationCreate,
+} from "./interfaces";
 
 function authHeaders(token: string) {
   return {
@@ -36,6 +44,28 @@ export const api = {
   },
   async createUser(token: string, data: IUserProfileCreate) {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
+  },
+  async getObservations(token: string) {
+    return axios.get<IObservation[]>("/Observation.json");
+
+    //return axios.get<IObservationProfile[]>(
+    //`${apiUrl}/api/v1/observations/`,
+    //authHeaders(token),
+    //);
+  },
+  async updateObservation(
+    token: string,
+    description: string,
+    data: IObservationUpdate,
+  ) {
+    return axios.put(
+      `${apiUrl}/api/v1/observations/${description}`,
+      data,
+      authHeaders(token),
+    );
+  },
+  async createObservation(token: string, data: IObservationCreate) {
+    return axios.post(`${apiUrl}/api/v1/observations/`, data, authHeaders(token));
   },
   async passwordRecovery(email: string) {
     return axios.post(`${apiUrl}/api/v1/password-recovery/${email}`);

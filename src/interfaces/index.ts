@@ -21,3 +21,21 @@ export interface IUserProfileCreate {
   is_active?: boolean;
   is_superuser?: boolean;
 }
+export interface IObservation {
+  description: string;
+  observation_type: string;
+  date: string;
+  id: number;
+}
+
+export interface IObservationUpdate {
+  description?: string;
+  observation_type?: string;
+  date?: string;
+}
+
+export interface IObservationCreate {
+  description: string;
+  observation_type?: string;
+  date?: string;
+}
