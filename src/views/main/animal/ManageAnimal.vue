@@ -3,7 +3,7 @@
     <v-toolbar light>
       <v-toolbar-title> Manage Users </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/main/admin/users/create">Create Animal</v-btn>
+      <v-btn color="primary" to="/main/animal/animals/create">Create Animal</v-btn>
     </v-toolbar>
     <v-data-table :headers="headers" :items="animals">
       <!-- eslint-disable-next-line vue/valid-v-slot -->
