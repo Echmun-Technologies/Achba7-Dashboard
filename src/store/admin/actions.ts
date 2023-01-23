@@ -3,6 +3,8 @@ import { ActionContext } from "vuex";
 import {
   IAnimalCreate,
   IAnimalUpdate,
+  IObservationCreate,
+  IObservationUpdate,
   IUserProfileCreate,
   IUserProfileUpdate,
 } from "@/interfaces";
@@ -15,6 +17,7 @@ import {
   commitSetAnimal,
   commitSetAnimals,
 } from "./mutations";
+import { commitSetUsers, commitSetUser, commitSetObservation } from "./mutations";
 import { dispatchCheckApiError } from "../main/actions";
 import { commitAddNotification, commitRemoveNotification } from "../main/mutations";
 
@@ -26,6 +29,16 @@ export const actions = {
       const response = await api.getUsers(context.rootState.main.token);
       if (response) {
         commitSetUsers(context, response.data);
+      }
+    } catch (error) {
+      await dispatchCheckApiError(context, error);
+    }
+  },
+  async actionGetObservations(context: MainContext) {
+    try {
+      const response = await api.getObservations(context.rootState.main.token);
+      if (response) {
+        commitSetObservation(context, response.data);
       }
     } catch (error) {
       await dispatchCheckApiError(context, error);
@@ -87,6 +100,9 @@ export const actions = {
   async actionUpdateAnimal(
     context: MainContext,
     payload: { id: number; animal: IAnimalUpdate },
+  async actionUpdateObservation(
+    context: MainContext,
+    payload: { description: string; observation: IObservationUpdate },
   ) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
@@ -101,6 +117,18 @@ export const actions = {
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "Animal successfully updated",
+          api.updateObservation(
+            context.rootState.main.token,
+            payload.description,
+            payload.observation,
+          ),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        ])
+      )[0];
+      commitSetObservation(context, response.data);
+      commitRemoveNotification(context, loadingNotification);
+      commitAddNotification(context, {
+        content: "Observation successfully updated",
         color: "success",
       });
     } catch (error) {
@@ -108,6 +136,7 @@ export const actions = {
     }
   },
   async actionCreateAnimal(context: MainContext, payload: IAnimalCreate) {
+  async actionCreateObservation(context: MainContext, payload: IObservationCreate) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
       commitAddNotification(context, loadingNotification);
@@ -121,6 +150,14 @@ export const actions = {
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "Animal successfully created",
+          api.createObservation(context.rootState.main.token, payload),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        ])
+      )[0];
+      commitSetObservation(context, response.data);
+      commitRemoveNotification(context, loadingNotification);
+      commitAddNotification(context, {
+        content: "Observation successfully created",
         color: "success",
       });
     } catch (error) {
@@ -137,3 +174,6 @@ export const dispatchUpdateUser = dispatch(actions.actionUpdateUser);
 export const dispatchCreateAnimal = dispatch(actions.actionCreateAnimal);
 export const dispatchGetAnimals = dispatch(actions.actionGetAnimals);
 export const dispatchUpdateAniaml = dispatch(actions.actionUpdateAnimal);
+export const dispatchCreateObservation = dispatch(actions.actionCreateObservation);
+export const dispatchGetObservations = dispatch(actions.actionGetObservations);
+export const dispatchUpdateObservation = dispatch(actions.actionUpdateObservation);

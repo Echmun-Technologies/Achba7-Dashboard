@@ -17,6 +17,13 @@ export const getters = {
     );
     if (filteredAnimals.length > 0) {
       return { ...filteredAnimals[0] };
+  adminObservations: (state: AdminState) => state.observations,
+  adminOneObservation: (state: AdminState) => (observationId: number) => {
+    const filteredObservations = state.observations.filter(
+      (observation) => observation.id === observationId,
+    );
+    if (filteredObservations.length > 0) {
+      return { ...filteredObservations[0] };
     }
   },
 };
@@ -27,3 +34,5 @@ export const readAdminOneUser = read(getters.adminOneUser);
 export const readAdminUsers = read(getters.adminUsers);
 export const readAdminOneAnimal = read(getters.adminOneAnimal);
 export const readAdminAnimals = read(getters.adminAnimals);
+export const readAdminOneObservation = read(getters.adminOneObservation);
+export const readAdminObservations = read(getters.adminObservations);

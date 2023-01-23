@@ -14,10 +14,18 @@
               </div>
               <div v-else class="title primary--text text--darken-2">-----</div>
             </div>
-            <validation-provider v-slot="{ errors }" name="Full Name" rules="required">
+            <validation-provider v-slot="{ errors }" name="First Name" rules="required">
               <v-text-field
-                v-model="fullName"
-                label="Full Name"
+                v-model="firstName"
+                label="First Name"
+                required
+                :error-messages="errors"
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider v-slot="{ errors }" name="Last Name" rules="required">
+              <v-text-field
+                v-model="lastName"
+                label="Last Name"
                 required
                 :error-messages="errors"
               ></v-text-field>
@@ -125,7 +133,8 @@ export default class EditUser extends Vue {
   };
 
   public valid = true;
-  public fullName = "";
+  public firstName = "";
+  public lastName = "";
   public email = "";
   public isActive = true;
   public isSuperuser = false;
@@ -144,7 +153,8 @@ export default class EditUser extends Vue {
     this.password2 = "";
     this.$refs.observer.reset();
     if (this.user) {
-      this.fullName = this.user.full_name;
+      this.firstName = this.user.first_name;
+      this.lastName = this.user.last_name;
       this.email = this.user.email;
       this.isActive = this.user.is_active;
       this.isSuperuser = this.user.is_superuser;
@@ -162,8 +172,11 @@ export default class EditUser extends Vue {
     }
 
     const updatedProfile: IUserProfileUpdate = {};
-    if (this.fullName) {
-      updatedProfile.full_name = this.fullName;
+    if (this.firstName) {
+      updatedProfile.first_name = this.firstName;
+    }
+    if (this.lastName) {
+      updatedProfile.last_name = this.lastName;
     }
     if (this.email) {
       updatedProfile.email = this.email;
