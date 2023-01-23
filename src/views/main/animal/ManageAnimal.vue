@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar light>
-      <v-toolbar-title> Manage Users </v-toolbar-title>
+      <v-toolbar-title> Manage Animals </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/main/animal/animals/create">Create Animal</v-btn>
     </v-toolbar>

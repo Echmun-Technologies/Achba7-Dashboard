@@ -49,12 +49,12 @@ export const api = {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
   async getObservations(token: string) {
-    return axios.get<IObservation[]>("/Observation.json");
+    //return axios.get<IObservation[]>("/Observation.json");
 
-    //return axios.get<IObservationProfile[]>(
-    //`${apiUrl}/api/v1/observations/`,
-    //authHeaders(token),
-    //);
+    return axios.get<IObservation[]>(
+    `${apiUrl}/api/v1/observations/`,
+    authHeaders(token),
+    );
   },
   async updateObservation(
     token: string,
@@ -80,11 +80,11 @@ export const api = {
     });
   },
   async getAnimals(_token: string) {
-    return axios.get<IAnimal[]>(
+    /*return axios.get<IAnimal[]>(
     `${apiUrl}/api/v1/animals/`,
     authHeaders(_token),
-    );
-    //return axios.get<IAnimal[]>("/Animal.json");
+    );*/
+    return axios.get<IAnimal[]>("/Animal.json");
   },
   async updateAnimal(token: string, id: number, data: IAnimalUpdate) {
     return axios.put(`${apiUrl}/api/v1/animals/${id}`, data, authHeaders(token));
