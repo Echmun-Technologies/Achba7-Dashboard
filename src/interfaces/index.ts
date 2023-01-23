@@ -42,3 +42,22 @@ export interface IObservationCreate {
   observation_type?: string;
   date?: string;
 }
+
+export interface IAnimal {
+  id: number;
+  name: string;
+  type: string;
+  photo: string;
+}
+
+export interface IAnimalUpdate {
+  name?: string;
+  type?: string;
+  photo?: string;
+}
+
+export interface IAnimalCreate {
+  name: string;
+  type?: string;
+  photo?: string;
+}

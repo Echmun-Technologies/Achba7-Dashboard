@@ -8,6 +8,9 @@ import {
   IObservation,
   IObservationUpdate,
   IObservationCreate,
+  IAnimal,
+  IAnimalCreate,
+  IAnimalUpdate
 } from "./interfaces";
 
 function authHeaders(token: string) {
@@ -76,4 +79,16 @@ export const api = {
       token,
     });
   },
+  async getAnimals(_token: string) {
+    return axios.get<IAnimal[]>(
+    `${apiUrl}/api/v1/animals/`,
+    authHeaders(_token),
+    );
+    //return axios.get<IAnimal[]>("/Animal.json");
+  },
+  async updateAnimal(token: string, id: number, data: IAnimalUpdate) {
+    return axios.put(`${apiUrl}/api/v1/animals/${id}`, data, authHeaders(token));
+  },
+  async createAnimal(token: string, data: IAnimalCreate) {
+    return axios.post(`${apiUrl}/api/v1/animals/`, data, authHeaders(token));},
 };
