@@ -5,13 +5,9 @@ import {
   IUserProfile,
   IUserProfileUpdate,
   IUserProfileCreate,
-  IAnimal,
-  IAnimalUpdate,
-  IAnimalCreate,
   IObservation,
   IObservationUpdate,
   IObservationCreate,
-
 } from "./interfaces";
 
 function authHeaders(token: string) {
@@ -49,14 +45,6 @@ export const api = {
   async createUser(token: string, data: IUserProfileCreate) {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
-  async getAnimals(_token: string) {
-    return axios.get<IAnimal[]>("/Animal.json");
-  },
-  async updateAnimal(token: string, id: number, data: IAnimalUpdate) {
-    return axios.put(`${apiUrl}/api/v1/animals/${id}`, data, authHeaders(token));
-  },
-  async createAnimal(token: string, data: IAnimalCreate) {
-    return axios.post(`${apiUrl}/api/v1/animals/`, data, authHeaders(token));
   async getObservations(token: string) {
     return axios.get<IObservation[]>("/Observation.json");
 
