@@ -1,4 +1,3 @@
-import { IAnimal, IUserProfile } from "@/interfaces";
 import { IObservation, IUserProfile } from "@/interfaces";
 import { AdminState } from "./state";
 import { getStoreAccessors } from "typesafe-vuex";
@@ -13,13 +12,6 @@ export const mutations = {
     users.push(payload);
     state.users = users;
   },
-  setAnimals(state: AdminState, payload: IAnimal[]) {
-    state.animals = payload;
-  },
-  setAnimal(state: AdminState, payload: IAnimal) {
-    const animals = state.animals.filter((animal: IAnimal) => animal.id !== payload.id);
-    animals.push(payload);
-    state.animals = animals;
   setObservations(state: AdminState, payload: IObservation[]) {
     state.observations = payload;
   },
@@ -36,6 +28,4 @@ const { commit } = getStoreAccessors<AdminState, State>("");
 
 export const commitSetUser = commit(mutations.setUser);
 export const commitSetUsers = commit(mutations.setUsers);
-export const commitSetAnimal = commit(mutations.setAnimal);
-export const commitSetAnimals = commit(mutations.setAnimals);
 export const commitSetObservation = commit(mutations.setObservations);
