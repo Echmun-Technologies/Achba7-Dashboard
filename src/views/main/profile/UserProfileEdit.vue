@@ -7,7 +7,12 @@
             <div class="headline primary--text">Edit User Profile</div>
           </v-card-title>
           <v-card-text>
-            <v-text-field v-model="fullName" label="Full Name" required></v-text-field>
+            <v-text-field
+              v-model="firstName"
+              label="First Name"
+              required
+            ></v-text-field>
+            <v-text-field v-model="lastName" label="Last Name" required></v-text-field>
             <validation-provider
               v-slot="{ errors }"
               rules="required|email"
@@ -58,13 +63,15 @@ export default class UserProfileEdit extends Vue {
   };
 
   public valid = true;
-  public fullName = "";
+  public firstName = "";
+  public lastName = "";
   public email = "";
 
   public created() {
     const userProfile = readUserProfile(this.$store);
     if (userProfile) {
-      this.fullName = userProfile.full_name;
+      this.firstName = userProfile.first_name;
+      this.lastName = userProfile.last_name;
       this.email = userProfile.email;
     }
   }
@@ -76,7 +83,8 @@ export default class UserProfileEdit extends Vue {
   public onReset() {
     const userProfile = readUserProfile(this.$store);
     if (userProfile) {
-      this.fullName = userProfile.full_name;
+      this.firstName = userProfile.first_name;
+      this.lastName = userProfile.last_name;
       this.email = userProfile.email;
     }
   }
@@ -92,8 +100,11 @@ export default class UserProfileEdit extends Vue {
     }
 
     const updatedProfile: IUserProfileUpdate = {};
-    if (this.fullName) {
-      updatedProfile.full_name = this.fullName;
+    if (this.firstName) {
+      updatedProfile.first_name = this.firstName;
+    }
+    if (this.lastName) {
+      updatedProfile.last_name = this.lastName;
     }
     if (this.email) {
       updatedProfile.email = this.email;
