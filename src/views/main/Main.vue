@@ -42,14 +42,6 @@
               <v-list-item-title>Change Password</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item to="/main/statistic">
-            <v-list-item-action>
-              <v-icon>mdi-charts</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Statistics</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
         </v-list>
         <v-divider></v-divider>
         <v-list v-show="hasAdminAccess" subheader>
