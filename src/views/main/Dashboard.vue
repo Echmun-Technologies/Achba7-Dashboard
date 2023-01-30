@@ -1,9 +1,31 @@
 <template>
   <v-container fluid>
-    <v-card class="ma-3 pa-3"> </v-card>
+    <br/>
+    <h2>Dashboard</h2>
+    <v-card class="ma-3 pa-3">
+      <div class="card-container">
+        <div class="card">
+          <img src="./active_users.png" class="card-image" />
+          <div class="card-content">
+            <h4 class="card-title">Active Users today</h4>
+            <p class="card-text">49</p>
+          </div>
+        </div>
+        <br />
+        <div class="card">
+          <img src="./active_observations.png" class="card-image" />
+          <div class="card-content">
+            <h4 class="card-title">Observations added today</h4>
+            <p class="card-text">90</p>
+          </div>
+        </div>
+      </div>
+    </v-card>
     <br />
     <div class="row">
-      <canvas id="myChart"></canvas>
+      <div class="col-md-6">
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
   </v-container>
 </template>
@@ -74,3 +96,42 @@ export default {
   },
 };
 </script>
+<style>
+.card-container {
+  display: flex;
+}
+
+.card {
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.card-image {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+}
+.card h3 {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card p {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  padding: 0 20px;
+}
+</style>
