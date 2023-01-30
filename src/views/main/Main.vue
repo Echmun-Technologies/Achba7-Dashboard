@@ -44,12 +44,17 @@
           </v-list-item>
           <v-list-item to="/main/statistic">
             <v-list-item-action>
-              <v-icon>mdi-charts</v-icon>
+              <v-icon>mdi-chart-line</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Statistics</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list>
+            <v-list-item v-for="species in animalSpecies" :key="species.species">
+              <v-list-item-title>{{ species.species }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
         </v-list>
         <v-divider></v-divider>
         <v-list v-show="hasAdminAccess" subheader>
@@ -76,7 +81,7 @@
           <v-subheader>Observations</v-subheader>
           <v-list-item to="/main/observation/observations/all">
             <v-list-item-action>
-              <v-icon>mdi-account-multiple</v-icon>
+              <v-icon>mdi-eye</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Manage Observations</v-list-item-title>
@@ -84,7 +89,7 @@
           </v-list-item>
           <v-list-item to="/main/observation/observations/create">
             <v-list-item-action>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>mdi-eye-plus</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Create Observation</v-list-item-title>
@@ -96,7 +101,7 @@
           <v-subheader>Animals</v-subheader>
           <v-list-item to="/main/animal/animals/all">
             <v-list-item-action>
-              <v-icon>mdi-account-multiple</v-icon>
+              <v-icon>mdi-paw</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Manage Animals</v-list-item-title>
@@ -104,7 +109,7 @@
           </v-list-item>
           <v-list-item to="/main/animal/animals/create">
             <v-list-item-action>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>mdi-plus</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Create Animal</v-list-item-title>
@@ -188,6 +193,7 @@ import {
   commitSetDashboardShowDrawer,
   commitSetDashboardMiniDrawer,
 } from "@/store/main/mutations";
+import { animalSpecies } from './interface/animalSpecies';
 import { dispatchUserLogOut } from "@/store/main/actions";
 const routeGuardMain = async (to, from, next) => {
   if (to.path === "/main") {
@@ -199,6 +205,12 @@ const routeGuardMain = async (to, from, next) => {
 @Component
 export default class Main extends Vue {
   public appName = appName;
+animalSpecies: any;
+data() {
+    return {
+      animalSpecies,
+    };
+  }
   public beforeRouteEnter(to, from, next) {
     routeGuardMain(to, from, next);
   }
