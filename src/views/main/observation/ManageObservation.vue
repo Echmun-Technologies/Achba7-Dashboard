@@ -46,9 +46,27 @@ export default class ManageObservation extends Vue {
       align: "left",
     },
     {
+      text: "Photo",
+      sortable: true,
+      value: "photo",
+      align: "left",
+    },
+    {
       text: "Date",
       sortable: true,
       value: "date",
+      align: "left",
+    },
+    {
+      text: "Coordinates Lat",
+      sortable: true,
+      value: "coordinates.lat",
+      align: "left",
+    },
+    {
+      text: "Coordinates Lng",
+      sortable: true,
+      value: "coordinates.lng",
       align: "left",
     },
     {

@@ -49,8 +49,6 @@ export const api = {
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
   async getObservations(token: string) {
-    //return axios.get<IObservation[]>("/Observation.json");
-
     return axios.get<IObservation[]>(
     `${apiUrl}/api/v1/observations/`,
     authHeaders(token),
@@ -58,11 +56,11 @@ export const api = {
   },
   async updateObservation(
     token: string,
-    description: string,
+    id: number,
     data: IObservationUpdate,
   ) {
     return axios.put(
-      `${apiUrl}/api/v1/observations/${description}`,
+      `${apiUrl}/api/v1/observations/${id}`,
       data,
       authHeaders(token),
     );
