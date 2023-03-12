@@ -6,12 +6,22 @@
       </v-card-title>
       <v-card-text>
         <div class="my-4">
-          <div class="subheading secondary--text text--lighten-3">Full Name</div>
+          <div class="subheading secondary--text text--lighten-3">First Name</div>
           <div
-            v-if="userProfile && userProfile.full_name"
+            v-if="userProfile && userProfile.first_name"
             class="title primary--text text--darken-2"
           >
-            {{ userProfile.full_name }}
+            {{ userProfile.first_name }}
+          </div>
+          <div v-else class="title primary--text text--darken-2">-----</div>
+        </div>
+        <div class="my-4">
+          <div class="subheading secondary--text text--lighten-3">Last Name</div>
+          <div
+            v-if="userProfile && userProfile.last_name"
+            class="title primary--text text--darken-2"
+          >
+            {{ userProfile.last_name }}
           </div>
           <div v-else class="title primary--text text--darken-2">-----</div>
         </div>
