@@ -1,11 +1,13 @@
 <template>
   <v-container fluid>
-    <br/>
+    <br />
     <h2>Dashboard</h2>
     <v-card class="ma-3 pa-3">
       <div class="card-container">
         <div class="card">
-          <img src="./active_users.png" class="card-image" />
+        <div class="icon">
+        <v-icon color="primary">mdi-account-multiple</v-icon>
+        </div>
           <div class="card-content">
             <h4 class="card-title">Active Users today</h4>
             <p class="card-text">49</p>
@@ -13,7 +15,9 @@
         </div>
         <br />
         <div class="card">
-          <img src="./active_observations.png" class="card-image" />
+          <div class="icon">
+          <v-icon color="primary">mdi-eye</v-icon>
+        </div>
           <div class="card-content">
             <h4 class="card-title">Observations added today</h4>
             <p class="card-text">90</p>
@@ -100,6 +104,12 @@ export default {
 .card-container {
   display: flex;
 }
+.icon
+{
+  width: 100px;
+  height: 50px;
+  margin: auto;
+}
 
 .card {
   width: 300px;
@@ -109,22 +119,11 @@ export default {
   text-align: center;
   display: flex;
   align-items: center;
-}
-
-.card-image {
-  width: 50px;
-  height: auto;
-  margin-right: 10px;
+  margin: auto;
 }
 .card-content {
   display: flex;
   flex-direction: column;
-}
-.card h3 {
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
 }
 
 .card p {
@@ -133,5 +132,9 @@ export default {
   line-height: 1.5;
   text-align: left;
   padding: 0 20px;
+}
+h2
+{
+  margin-left: 30px;
 }
 </style>
