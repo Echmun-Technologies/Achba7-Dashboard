@@ -5,9 +5,9 @@
     <v-card class="ma-3 pa-3">
       <div class="card-container">
         <div class="card">
-        <div class="icon">
-        <v-icon color="primary">mdi-account-multiple</v-icon>
-        </div>
+          <div class="icon">
+            <v-icon color="primary">mdi-account-multiple</v-icon>
+          </div>
           <div class="card-content">
             <h4 class="card-title">Active Users today</h4>
             <p class="card-text">49</p>
@@ -16,8 +16,8 @@
         <br />
         <div class="card">
           <div class="icon">
-          <v-icon color="primary">mdi-eye</v-icon>
-        </div>
+            <v-icon color="primary">mdi-eye</v-icon>
+          </div>
           <div class="card-content">
             <h4 class="card-title">Observations added today</h4>
             <p class="card-text">90</p>
@@ -44,48 +44,45 @@ export default {
   },
   mounted() {
     const ctx = document.getElementById("myChart");
-    const labels = [
-      "2022-12-27",
-      "2022-12-28",
-      "2022-12-29",
-      "2022-12-30",
-      "2022-12-31",
-      "2023-01-01",
-      "2023-01-02",
-      "2023-01-03",
-      "2023-01-04",
-      "2023-01-05",
-      "2023-01-06",
-      "2023-01-07",
-      "2023-01-08",
-      "2023-01-09",
-      "2023-01-10",
-      "2023-01-11",
-      "2023-01-12",
-      "2023-01-13",
-      "2023-01-14",
-      "2023-01-15",
-      "2023-01-16",
-      "2023-01-17",
-      "2023-01-18",
-      "2023-01-19",
-      "2023-01-20",
-      "2023-01-21",
-      "2023-01-22",
-      "2023-01-23",
-      "2023-01-24",
-      "2023-01-25",
-      "2023-01-26",
-    ];
-    const data = {
-      labels: labels,
+    let data = {
+      "2023-02-21": 864,
+      "2023-02-22": 394,
+      "2023-02-23": 776,
+      "2023-02-24": 911,
+      "2023-02-25": 430,
+      "2023-02-26": 41,
+      "2023-02-27": 265,
+      "2023-02-28": 988,
+      "2023-03-01": 523,
+      "2023-03-02": 497,
+      "2023-03-03": 414,
+      "2023-03-04": 940,
+      "2023-03-05": 802,
+      "2023-03-06": 849,
+      "2023-03-07": 310,
+      "2023-03-08": 991,
+      "2023-03-09": 488,
+      "2023-03-10": 366,
+      "2023-03-11": 597,
+      "2023-03-12": 913,
+      "2023-03-13": 929,
+      "2023-03-14": 223,
+      "2023-03-15": 516,
+      "2023-03-16": 142,
+      "2023-03-17": 288,
+      "2023-03-18": 143,
+      "2023-03-19": 773,
+      "2023-03-20": 97,
+      "2023-03-21": 633,
+      "2023-03-22": 818,
+      "2023-03-23": 256,
+    };
+    data = {
+      labels: Object.keys(data),
       datasets: [
         {
           label: "Active Users in the last 30 days",
-          data: [
-            874, 635, 135, 732, 317, 397, 766, 424, 848, 666, 82, 1, 608, 196, 715, 342,
-            163, 245, 228, 652, 458, 387, 727, 896, 689, 581, 895, 424, 32, 411, 892,
-          ],
+          data: Object.values(data),
           fill: false,
           borderColor: "rgb(255, 99, 132)",
           tension: 0.1,
@@ -104,8 +101,7 @@ export default {
 .card-container {
   display: flex;
 }
-.icon
-{
+.icon {
   width: 100px;
   height: 50px;
   margin: auto;
@@ -133,8 +129,7 @@ export default {
   text-align: left;
   padding: 0 20px;
 }
-h2
-{
+h2 {
   margin-left: 30px;
 }
 </style>
