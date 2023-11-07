@@ -47,6 +47,13 @@ export default new Router({
                 ),
             },
             {
+              path: "statistic",
+              component: () =>
+                import(
+                  /* webpackChunkName: "main-statistic" */ "./views/main/Statistics.vue"
+                ),
+            },
+            {
               path: "profile",
               component: RouterComponent,
               redirect: "profile/view",
