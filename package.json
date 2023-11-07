@@ -97,5 +97,5 @@
   },
   "publishConfig": {
   "@Saffist3r:registry": "https://npm.pkg.github.com"
-},
+}
 }
