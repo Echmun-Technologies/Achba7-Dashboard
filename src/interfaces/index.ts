@@ -27,20 +27,37 @@ export interface IUserProfileCreate {
 export interface IObservation {
   description: string;
   observation_type: string;
+  photo: string;
   date: string;
+  coordinates: {
+    lat: 0;
+    lng: 0;
+  };
   id: number;
 }
 
 export interface IObservationUpdate {
   description?: string;
   observation_type?: string;
+  photo?: string;
   date?: string;
+  coordinates?: {
+    lat: 0;
+    lng: 0;
+  };
 }
 
 export interface IObservationCreate {
+  lng: number;
+  lat: number;
   description: string;
   observation_type?: string;
+  photo?: string;
   date?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface IAnimal {

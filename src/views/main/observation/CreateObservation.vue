@@ -31,10 +31,33 @@
                 required
               ></v-text-field>
             </validation-provider>
+            <validation-provider v-slot="{ errors }" rules="required" name="Photo">
+              <v-text-field
+                v-model="photo"
+                label="Photo"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
             <validation-provider v-slot="{ errors }" rules="required" name="Date">
               <v-text-field
                 v-model="date"
                 label="Date"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider v-slot="{ errors }" rules="required" name="Coordinates"
+              >Coordinates
+              <v-text-field
+                v-model="coordinates.lat"
+                label="Lng"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="coordinates.lng"
+                label="Lat"
                 :error-messages="errors"
                 required
               ></v-text-field>
@@ -54,7 +77,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { IObservationProfileCreate } from "@/interfaces";
+import { IObservationCreate } from "@/interfaces";
 import {
   dispatchCreateObservation,
   dispatchGetObservations,
@@ -80,7 +103,8 @@ export default class CreateObservation extends Vue {
   public description = "";
   public observation_type = "";
   public date = "";
-
+  public photo = "";
+  coordinates = {"lat":0,"lng":0}
   public async mounted() {
     await dispatchGetObservations(this.$store);
     this.onReset();
@@ -90,6 +114,9 @@ export default class CreateObservation extends Vue {
     this.description = "";
     this.observation_type = "";
     this.date = "";
+    this.photo = "";
+    this.coordinates.lat = 0;
+    this.coordinates.lng = 0;
   }
 
   public cancel() {
@@ -102,11 +129,16 @@ export default class CreateObservation extends Vue {
       return;
     }
 
-    const updatedProfile: IObservationProfileCreate = {
+    const updatedProfile: IObservationCreate = {
       description: this.description,
+      lng: 0,
+      lat: 0,
     };
     if (this.observation_type) {
       updatedProfile.observation_type = this.observation_type;
+    }
+    if (this.photo) {
+      updatedProfile.photo = this.photo;
     }
     if (this.date) {
       updatedProfile.date = this.date;

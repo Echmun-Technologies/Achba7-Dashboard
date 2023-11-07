@@ -89,7 +89,7 @@ export const actions = {
   },
   async actionUpdateObservation(
     context: MainContext,
-    payload: { description: string; observation: IObservationUpdate },
+    payload: { id: number; observation: IObservationUpdate },
   ) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
@@ -98,7 +98,7 @@ export const actions = {
         await Promise.all([
           api.updateObservation(
             context.rootState.main.token,
-            payload.description,
+            payload.id,
             payload.observation,
           ),
           await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),

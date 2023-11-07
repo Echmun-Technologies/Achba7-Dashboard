@@ -38,10 +38,33 @@
                 required
               ></v-text-field>
             </validation-provider>
+            <validation-provider v-slot="{ errors }" rules="required" name="Photo">
+              <v-text-field
+                v-model="photo"
+                label="Photo"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
             <validation-provider v-slot="{ errors }" rules="required" name="Date">
               <v-text-field
                 v-model="date"
                 label="Date"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider v-slot="{ errors }" rules="required" name="Coordinates"
+              >Coordinates
+              <v-text-field
+                v-model="lat"
+                label="Lng"
+                :error-messages="errors"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="lng"
+                label="Lat"
                 :error-messages="errors"
                 required
               ></v-text-field>
@@ -83,11 +106,12 @@ export default class EditObservation extends Vue {
     observer: InstanceType<typeof ValidationObserver>;
   };
 
-  public valid = false;
   public description = "";
   public observation_type = "";
   public date = "";
-  observation: any;
+  public photo = "";
+  public lat = 0;
+  public lng = 0;
 
   public async mounted() {
     await dispatchGetObservations(this.$store);
@@ -99,6 +123,9 @@ export default class EditObservation extends Vue {
       this.description = this.observation.description;
       this.observation_type = this.observation.observation_type;
       this.date = this.observation.date;
+      this.photo = this.observation.photo;
+      this.lat = this.observation.coordinates.lat;
+      this.lng = this.observation.coordinates.lng;
     }
   }
 
@@ -119,20 +146,23 @@ export default class EditObservation extends Vue {
     if (this.observation_type) {
       updatedProfile.observation_type = this.observation_type;
     }
+    if (this.photo) {
+      updatedProfile.photo = this.photo;
+    }
     if (this.date) {
       updatedProfile.date = this.date;
     }
     if (this.observation) {
       await dispatchUpdateObservation(this.$store, {
-        description: this.observation.date,
+        id: this.observation.id,
         observation: updatedProfile,
       });
     }
     this.$router.push("/main/observation/observations");
   }
 
-  get user() {
-    return readAdminOneObservation(this.$store)(this.$router.currentRoute.params.id);
+  get observation() {
+    return readAdminOneObservation(this.$store)(+this.$router.currentRoute.params.id);
   }
 }
 </script>
