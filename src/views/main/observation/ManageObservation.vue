@@ -77,7 +77,6 @@ export default class ManageObservation extends Vue {
   ];
 
   get observations() {
-    console.log(readAdminObservations(this.$store));
     return readAdminObservations(this.$store);
   }
 
