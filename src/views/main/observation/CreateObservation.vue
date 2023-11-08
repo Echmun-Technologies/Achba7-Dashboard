@@ -104,7 +104,7 @@ export default class CreateObservation extends Vue {
   public observation_type = "";
   public date = "";
   public photo = "";
-  coordinates = {lat:0,lng:0}
+  coordinates = { lat: 0, lng: 0 };
   public async mounted() {
     await dispatchGetObservations(this.$store);
     this.onReset();
